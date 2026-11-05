@@ -1,0 +1,29 @@
+[
+  {
+    "id": "USR-1001",
+    "fullName": "Amaka Okafor",
+    "email": "client@raycom.ng",
+    "phone": "+234 803 123 4567",
+    "passwordHash": "password123",
+    "country": "Nigeria",
+    "state": "Enugu",
+    "lga": "Enugu North",
+    "address": "Plot 12 Independence Layout",
+    "createdAt": "2026-11-04T01:52:03.945Z",
+    "lastLoginAt": "2026-11-04T01:52:03.945Z"
+  },
+  {
+    "id": "USR-1256",
+    "fullName": "Nnadi Nnamdi",
+    "email": "test@gmail.com",
+    "phone": "0803674849",
+    "passwordHash": "Pass123",
+    "country": "Nigeria",
+    "state": "Enugu",
+    "lga": "Nkanu East",
+    "address": "No 12 ofoulon street",
+    "preferredService": "Deep House Cleaning",
+    "createdAt": "2026-11-04T02:30:43.629Z",
+    "lastLoginAt": "2026-11-04T02:48:07.764Z"
+  }
+]

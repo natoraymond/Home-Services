@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#090d16" />
+    </linearGradient>
+
+    <!-- 1000 Gallons Massive GeePee Tank Body Gradient -->
+    <linearGradient id="blackTank1000" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#101217" />
+      <stop offset="25%" stop-color="#242932" />
+      <stop offset="50%" stop-color="#3e4655" />
+      <stop offset="75%" stop-color="#1d2027" />
+      <stop offset="100%" stop-color="#090a0d" />
+    </linearGradient>
+
+    <linearGradient id="ribHighlight" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#171b22" />
+      <stop offset="35%" stop-color="#4f586a" />
+      <stop offset="65%" stop-color="#343a46" />
+      <stop offset="100%" stop-color="#0d0e12" />
+    </linearGradient>
+
+    <linearGradient id="sheen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.18" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+
+    <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="20" stdDeviation="15" flood-color="#000000" flood-opacity="0.85" />
+    </filter>
+  </defs>
+
+  <rect width="400" height="320" fill="url(#bgGrad)" />
+
+  <!-- Heavy Tower Foundation Shadow -->
+  <ellipse cx="200" cy="288" rx="136" ry="24" fill="#020617" opacity="0.95" />
+
+  <!-- 1,000 Gallons Flagship Tank (Broad, Massive, Prominent GEEPEE Branding) -->
+  <g filter="url(#dropShadow)">
+    <path d="M 108 68 C 108 42, 292 42, 292 68 L 286 270 C 286 282, 114 282, 114 270 Z" fill="url(#blackTank1000)" />
+
+    <!-- Top Cap / Manhole -->
+    <ellipse cx="200" cy="42" rx="46" ry="12" fill="#181c24" stroke="#475569" stroke-width="2" />
+    <ellipse cx="200" cy="39" rx="34" ry="7" fill="#2b323f" />
+    <rect x="193" y="32" width="14" height="7" rx="2" fill="#64748b" />
+
+    <path d="M 108 68 C 108 46, 292 46, 292 68 C 292 78, 108 78, 108 68 Z" fill="url(#ribHighlight)" />
+
+    <!-- 9 Horizontal Sturdy Ribs -->
+    <path d="M 109 90 C 109 84, 291 84, 291 90 C 291 96, 109 96, 109 90 Z" fill="url(#ribHighlight)" />
+    <path d="M 110 112 C 110 106, 290 106, 290 112 C 290 118, 110 118, 110 112 Z" fill="url(#ribHighlight)" />
+    <path d="M 111 134 C 111 128, 289 128, 289 134 C 289 140, 111 140, 111 134 Z" fill="url(#ribHighlight)" />
+    <path d="M 111 156 C 111 150, 289 150, 289 156 C 289 162, 111 162, 111 156 Z" fill="url(#ribHighlight)" />
+    <path d="M 112 178 C 112 172, 288 172, 288 178 C 288 184, 112 184, 112 178 Z" fill="url(#ribHighlight)" />
+    <path d="M 112 200 C 112 194, 288 194, 288 200 C 288 206, 112 206, 112 200 Z" fill="url(#ribHighlight)" />
+    <path d="M 113 222 C 113 216, 287 216, 287 222 C 287 228, 113 228, 113 222 Z" fill="url(#ribHighlight)" />
+    <path d="M 113 244 C 113 238, 287 238, 287 244 C 287 250, 113 250, 113 244 Z" fill="url(#ribHighlight)" />
+
+    <path d="M 114 266 C 114 258, 286 258, 286 266 C 286 276, 114 276, 114 266 Z" fill="#101217" />
+
+    <!-- Big Center GeePee White Stencil Brand Mark -->
+    <g transform="translate(174, 102) scale(0.85)" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M 30 5 L 56 35 L 30 70 L 4 35 Z" stroke-width="3.5" opacity="0.35" />
+      <path d="M 27 12 C 12 12, 10 28, 10 40 C 10 54, 16 62, 30 62 L 30 10" />
+      <path d="M 20 40 L 30 40" stroke-width="4.5" />
+      <path d="M 30 10 L 30 62" />
+      <path d="M 30 14 C 44 14, 48 24, 48 32 C 48 40, 42 46, 30 46" />
+    </g>
+
+    <!-- Bold GEEPEE Title & Spec -->
+    <text x="200" y="174" text-anchor="middle" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-size="19" fill="#ffffff" letter-spacing="4">GEEPEE</text>
+    <text x="200" y="188" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="9" fill="#cbd5e1" letter-spacing="1.5">1,000 GALLONS • 4,500L</text>
+
+    <!-- Reflection highlight -->
+    <path d="M 140 70 L 165 70 L 156 268 L 132 268 Z" fill="url(#sheen)" />
+  </g>
+
+  <!-- Tag Capacity Badge -->
+  <g transform="translate(24, 24)">
+    <rect width="155" height="28" rx="8" fill="#0891b2" fill-opacity="0.95" stroke="#22d3ee" stroke-width="1" />
+    <text x="77" y="18" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="800" fill="#ffffff">1,000 GAL (4,500L)</text>
+  </g>
+</svg>
+

@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#090d16" />
+    </linearGradient>
+
+    <!-- Black Polyethylene GP Tank Gradient -->
+    <linearGradient id="tankBody" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#181a1f" />
+      <stop offset="25%" stop-color="#2a2e39" />
+      <stop offset="50%" stop-color="#3d4352" />
+      <stop offset="75%" stop-color="#1e2229" />
+      <stop offset="100%" stop-color="#0f1115" />
+    </linearGradient>
+
+    <linearGradient id="ribHighlight" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#232730" />
+      <stop offset="35%" stop-color="#4e5668" />
+      <stop offset="65%" stop-color="#363c49" />
+      <stop offset="100%" stop-color="#111317" />
+    </linearGradient>
+
+    <!-- Metallic/Water Sheen -->
+    <linearGradient id="sheen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+
+    <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="12" flood-color="#000000" flood-opacity="0.7" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="320" fill="url(#bgGrad)" />
+
+  <!-- Subtle concrete floor stanchion / shadow -->
+  <ellipse cx="200" cy="278" rx="100" ry="22" fill="#020617" opacity="0.8" />
+  <ellipse cx="200" cy="275" rx="85" ry="16" fill="#0b1120" opacity="0.9" />
+
+  <!-- The GP Tank (200 Gallons / 900 Liters compact) -->
+  <g filter="url(#dropShadow)">
+    <!-- Tank Main Body Silhouette -->
+    <path d="M 135 90 C 135 68, 265 68, 265 90 L 260 262 C 260 274, 140 274, 140 262 Z" fill="url(#tankBody)" />
+
+    <!-- Top Screw Lid / Manhole -->
+    <ellipse cx="200" cy="68" rx="35" ry="10" fill="#1e232d" stroke="#333b49" stroke-width="2" />
+    <ellipse cx="200" cy="65" rx="26" ry="6" fill="#2d3545" />
+    <rect x="194" y="58" width="12" height="6" rx="2" fill="#475569" />
+
+    <!-- Dome Top Shoulder -->
+    <path d="M 135 90 C 135 70, 265 70, 265 90 C 265 98, 135 98, 135 90 Z" fill="url(#ribHighlight)" />
+
+    <!-- Authentic Nigerian Horizontal Reinforcement Ribs -->
+    <!-- Rib 1 -->
+    <path d="M 136 112 C 136 106, 264 106, 264 112 C 264 118, 136 118, 136 112 Z" fill="url(#ribHighlight)" />
+    <!-- Rib 2 -->
+    <path d="M 137 136 C 137 130, 263 130, 263 136 C 263 142, 137 142, 137 136 Z" fill="url(#ribHighlight)" />
+    <!-- Rib 3 -->
+    <path d="M 138 160 C 138 154, 262 154, 262 160 C 262 166, 138 166, 138 160 Z" fill="url(#ribHighlight)" />
+    <!-- Rib 4 -->
+    <path d="M 138 184 C 138 178, 262 178, 262 184 C 262 190, 138 190, 138 184 Z" fill="url(#ribHighlight)" />
+    <!-- Rib 5 -->
+    <path d="M 139 208 C 139 202, 261 202, 261 208 C 261 214, 139 214, 139 208 Z" fill="url(#ribHighlight)" />
+    <!-- Rib 6 -->
+    <path d="M 139 232 C 139 226, 261 226, 261 232 C 261 238, 139 238, 139 232 Z" fill="url(#ribHighlight)" />
+
+    <!-- Tank Base Curve -->
+    <path d="M 140 258 C 140 250, 260 250, 260 258 C 260 268, 140 268, 140 258 Z" fill="#181d26" />
+
+    <!-- Authentic GEEPEE White Paint Logo & Symbol on Tank -->
+    <!-- Logo Monogram GP Symbol -->
+    <g transform="translate(180, 128) scale(0.65)" fill="none" stroke="#f8fafc" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Outer diamond/loop -->
+      <path d="M 30 5 L 55 35 L 30 70 L 5 35 Z" stroke-width="3" opacity="0.3" />
+      <!-- Left 'G' shape -->
+      <path d="M 27 12 C 12 12, 10 28, 10 40 C 10 54, 16 62, 30 62 L 30 10" />
+      <path d="M 20 40 L 30 40" stroke-width="4" />
+      <!-- Right 'P' shape -->
+      <path d="M 30 10 L 30 62" />
+      <path d="M 30 14 C 44 14, 48 24, 48 32 C 48 40, 42 46, 30 46" />
+    </g>
+
+    <!-- "GEEPEE" Stenciled Text -->
+    <text x="200" y="185" text-anchor="middle" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-size="14" fill="#ffffff" letter-spacing="3" opacity="0.95">GEEPEE</text>
+    <text x="200" y="197" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="8" fill="#94a3b8" letter-spacing="1">WATER TANK</text>
+
+    <!-- Side Vertical Light Reflection Sheen -->
+    <path d="M 160 92 L 180 92 L 175 258 L 158 258 Z" fill="url(#sheen)" />
+  </g>
+
+  <!-- Tag Capacity Badge -->
+  <g transform="translate(24, 24)">
+    <rect width="130" height="28" rx="8" fill="#0369a1" fill-opacity="0.9" stroke="#38bdf8" stroke-width="1" />
+    <text x="65" y="18" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="800" fill="#ffffff">200 GAL (900L)</text>
+  </g>
+</svg>
+

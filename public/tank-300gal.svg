@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#090d16" />
+    </linearGradient>
+
+    <!-- Deep Blue GeePee Tank Plastic Gradient -->
+    <linearGradient id="blueTankBody" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#075985" />
+      <stop offset="25%" stop-color="#0284c7" />
+      <stop offset="50%" stop-color="#38bdf8" />
+      <stop offset="75%" stop-color="#0369a1" />
+      <stop offset="100%" stop-color="#0c4a6e" />
+    </linearGradient>
+
+    <linearGradient id="blueRibHighlight" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0369a1" />
+      <stop offset="35%" stop-color="#7dd3fc" />
+      <stop offset="65%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#082f49" />
+    </linearGradient>
+
+    <linearGradient id="sheen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+
+    <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="12" flood-color="#000000" flood-opacity="0.75" />
+    </filter>
+  </defs>
+
+  <rect width="400" height="320" fill="url(#bgGrad)" />
+
+  <ellipse cx="200" cy="278" rx="108" ry="22" fill="#020617" opacity="0.85" />
+
+  <!-- 300 Gallons GP Tank (Medium Blue Poly Tank) -->
+  <g filter="url(#dropShadow)">
+    <path d="M 128 85 C 128 62, 272 62, 272 85 L 268 262 C 268 274, 132 274, 132 262 Z" fill="url(#blueTankBody)" />
+
+    <!-- Top Cap -->
+    <ellipse cx="200" cy="62" rx="36" ry="10" fill="#082f49" stroke="#38bdf8" stroke-width="1.5" />
+    <ellipse cx="200" cy="59" rx="26" ry="6" fill="#0369a1" />
+    <rect x="194" y="52" width="12" height="6" rx="2" fill="#e0f2fe" />
+
+    <!-- Dome Top Shoulder -->
+    <path d="M 128 85 C 128 65, 272 65, 272 85 C 272 94, 128 94, 128 85 Z" fill="url(#blueRibHighlight)" />
+
+    <!-- Distinct Horizontal Ribs -->
+    <path d="M 129 108 C 129 102, 271 102, 271 108 C 271 114, 129 114, 129 108 Z" fill="url(#blueRibHighlight)" />
+    <path d="M 130 132 C 130 126, 270 126, 270 132 C 270 138, 130 138, 130 132 Z" fill="url(#blueRibHighlight)" />
+    <path d="M 130 156 C 130 150, 270 150, 270 156 C 270 162, 130 162, 130 156 Z" fill="url(#blueRibHighlight)" />
+    <path d="M 131 180 C 131 174, 269 174, 269 180 C 269 186, 131 186, 131 180 Z" fill="url(#blueRibHighlight)" />
+    <path d="M 131 204 C 131 198, 269 198, 269 204 C 269 210, 131 210, 131 204 Z" fill="url(#blueRibHighlight)" />
+    <path d="M 132 228 C 132 222, 268 222, 268 228 C 268 234, 132 234, 132 228 Z" fill="url(#blueRibHighlight)" />
+
+    <path d="M 132 258 C 132 250, 268 250, 268 258 C 268 268, 132 268, 132 258 Z" fill="#075985" />
+
+    <!-- Authentic GEEPEE White Paint Logo & Symbol on Tank -->
+    <g transform="translate(180, 122) scale(0.68)" fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M 30 5 L 55 35 L 30 70 L 5 35 Z" stroke-width="3" opacity="0.4" />
+      <path d="M 27 12 C 12 12, 10 28, 10 40 C 10 54, 16 62, 30 62 L 30 10" />
+      <path d="M 20 40 L 30 40" stroke-width="4" />
+      <path d="M 30 10 L 30 62" />
+      <path d="M 30 14 C 44 14, 48 24, 48 32 C 48 40, 42 46, 30 46" />
+    </g>
+
+    <text x="200" y="182" text-anchor="middle" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-size="15" fill="#ffffff" letter-spacing="3">GEEPEE</text>
+    <text x="200" y="195" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="8" fill="#e0f2fe" letter-spacing="1">WATER TANK • 1,350L</text>
+
+    <!-- Side Highlight -->
+    <path d="M 155 86 L 178 86 L 172 260 L 152 260 Z" fill="url(#sheen)" />
+  </g>
+
+  <!-- Capacity Badge -->
+  <g transform="translate(24, 24)">
+    <rect width="145" height="28" rx="8" fill="#0284c7" fill-opacity="0.9" stroke="#7dd3fc" stroke-width="1" />
+    <text x="72" y="18" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="800" fill="#ffffff">300 GAL (1,350L)</text>
+  </g>
+</svg>
+

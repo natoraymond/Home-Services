@@ -1,0 +1,57 @@
+[
+  {
+    "id": "TECH-01",
+    "name": "Tunde Bakare",
+    "phone": "+234 802 111 0001",
+    "specialty": "Deep House Cleaning & Sanitation",
+    "state": "Lagos",
+    "lga": "Ikeja",
+    "status": "On-Job",
+    "rating": 4.9,
+    "completedJobs": 142
+  },
+  {
+    "id": "TECH-02",
+    "name": "Chukwudi Okafor",
+    "phone": "+234 803 222 0002",
+    "specialty": "Master Plumber & Tank Washing",
+    "state": "Lagos",
+    "lga": "Eti-Osa (Lekki / Victoria Island)",
+    "status": "On-Job",
+    "rating": 4.95,
+    "completedJobs": 210
+  },
+  {
+    "id": "TECH-03",
+    "name": "Emeka Stanley",
+    "phone": "+234 805 333 0003",
+    "specialty": "Certified Electrical Engineer",
+    "state": "Rivers",
+    "lga": "Port Harcourt",
+    "status": "Available",
+    "rating": 4.88,
+    "completedJobs": 98
+  },
+  {
+    "id": "TECH-04",
+    "name": "Ibrahim Sani",
+    "phone": "+234 816 444 0004",
+    "specialty": "Water Treatment & Tank Desludging",
+    "state": "Kano",
+    "lga": "Nasarawa",
+    "status": "Available",
+    "rating": 4.92,
+    "completedJobs": 115
+  },
+  {
+    "id": "TECH-05",
+    "name": "Kofi Boateng",
+    "phone": "+233 24 555 0005",
+    "specialty": "HVAC & Commercial Air Systems",
+    "state": "Greater Accra",
+    "lga": "Ayawaso West (East Legon)",
+    "status": "Available",
+    "rating": 4.85,
+    "completedJobs": 84
+  }
+]
