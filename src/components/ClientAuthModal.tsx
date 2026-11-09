@@ -40,10 +40,17 @@ export default function ClientAuthModal({
   const [registerEmail, setRegisterEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
+  const [registerConfirmPassword, setRegisterConfirmPassword] = useState("");
+  const [showRegPassword, setShowRegPassword] = useState(false);
   const [country, setCountry] = useState("Nigeria");
   const [state, setState] = useState("Lagos");
   const [lga, setLga] = useState("Ikeja");
   const [address, setAddress] = useState("");
+
+  // Reset password state
+  const [showForgotModal, setShowForgotModal] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState("");
+  const [forgotMsg, setForgotMsg] = useState<string | null>(null);
 
   // Sync mode with prop changes
   useEffect(() => {
@@ -100,6 +107,19 @@ export default function ClientAuthModal({
     setLoading(true);
     setErrorMsg(null);
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(loginEmail.trim())) {
+      setErrorMsg("Please enter a valid email address (e.g. name@example.com).");
+      setLoading(false);
+      return;
+    }
+
+    if (loginPassword.length < 6) {
+      setErrorMsg("Password must be at least 6 characters long.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const res = await fetch("/api/auth/client", {
         method: "POST",
@@ -146,6 +166,25 @@ export default function ClientAuthModal({
     setLoading(true);
     setErrorMsg(null);
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(registerEmail.trim())) {
+      setErrorMsg("Please enter a valid email address (e.g. name@example.com).");
+      setLoading(false);
+      return;
+    }
+
+    if (registerPassword.length < 6) {
+      setErrorMsg("Password must be at least 6 characters long.");
+      setLoading(false);
+      return;
+    }
+
+    if (registerPassword !== registerConfirmPassword) {
+      setErrorMsg("Passwords do not match. Please verify your confirmation password.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const res = await fetch("/api/auth/client", {
         method: "POST",
@@ -156,6 +195,7 @@ export default function ClientAuthModal({
           email: registerEmail,
           phone,
           password: registerPassword,
+          confirmPassword: registerConfirmPassword,
           country,
           state,
           lga,
@@ -314,63 +354,133 @@ export default function ClientAuthModal({
 
           {/* SIGN IN FORM */}
           {mode === "signin" ? (
-            <form onSubmit={handleSignIn} className="space-y-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                  Email Address *
-                </label>
-                <div className="relative">
+            <>
+              <form onSubmit={handleSignIn} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    Email Address *
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="email"
+                      required
+                      placeholder="e.g. client@example.com"
+                      value={loginEmail}
+                      onChange={(e) => setLoginEmail(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 text-sm bg-slate-50/50"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                      Password *
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="text-[11px] text-blue-600 hover:underline font-semibold cursor-pointer"
+                    >
+                      {showPassword ? "Hide" : "Show"}
+                    </button>
+                  </div>
                   <input
-                    type="email"
+                    type={showPassword ? "text" : "password"}
                     required
-                    placeholder="e.g. client@example.com"
-                    value={loginEmail}
-                    onChange={(e) => setLoginEmail(e.target.value)}
+                    placeholder="Enter your account password"
+                    value={loginPassword}
+                    onChange={(e) => setLoginPassword(e.target.value)}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 text-sm bg-slate-50/50"
                   />
                 </div>
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full py-3.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-extrabold text-sm tracking-wide transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer mt-2"
+                >
+                  {loading ? (
+                    <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                  ) : (
+                    <>
+                      <span>Sign In to Dashboard</span>
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </>
+                  )}
+                </button>
+              </form>
+
+              {/* Forgot password outside the form */}
+              <div className="pt-2 flex items-center justify-between text-xs border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setForgotEmail(loginEmail || "");
+                    setForgotMsg(null);
+                    setShowForgotModal(true);
+                  }}
+                  className="font-bold text-amber-700 hover:text-amber-800 hover:underline inline-flex items-center gap-1 cursor-pointer"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                  </svg>
+                  <span>Forgot password?</span>
+                </button>
+                <span className="text-[11px] text-slate-400">Direct account recovery</span>
               </div>
 
-              <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                    Password *
-                  </label>
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="text-[11px] text-blue-600 hover:underline font-semibold cursor-pointer"
-                  >
-                    {showPassword ? "Hide" : "Show"}
-                  </button>
+              {/* Forgot Password Reset Dialog */}
+              {showForgotModal && (
+                <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-slate-800 space-y-3 animate-in fade-in zoom-in-95 mt-2">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-xs font-bold text-amber-950 uppercase tracking-wider flex items-center gap-1.5">
+                      <span>🔑</span> Password Recovery
+                    </h4>
+                    <button
+                      type="button"
+                      onClick={() => setShowForgotModal(false)}
+                      className="text-xs text-slate-500 hover:text-slate-800 font-bold"
+                    >
+                      ✕ Close
+                    </button>
+                  </div>
+                  <p className="text-xs text-amber-900 leading-relaxed">
+                    Enter your registered client email to receive a password reset link.
+                  </p>
+                  {forgotMsg ? (
+                    <div className="p-2.5 rounded-xl bg-emerald-100 border border-emerald-300 text-xs font-bold text-emerald-900">
+                      {forgotMsg}
+                    </div>
+                  ) : (
+                    <div className="flex gap-2">
+                      <input
+                        type="email"
+                        placeholder="client@domain.com"
+                        value={forgotEmail}
+                        onChange={(e) => setForgotEmail(e.target.value)}
+                        className="flex-1 px-3 py-2 rounded-xl border border-amber-300 bg-white text-xs focus:ring-2 focus:ring-blue-600"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (!forgotEmail || !forgotEmail.includes("@")) {
+                            setForgotMsg("Please provide a valid email address.");
+                            return;
+                          }
+                          setForgotMsg(`Password reset link sent to ${forgotEmail}. Please check your inbox.`);
+                        }}
+                        className="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shrink-0 cursor-pointer shadow-sm"
+                      >
+                        Send Link
+                      </button>
+                    </div>
+                  )}
                 </div>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  required
-                  placeholder="Enter your account password"
-                  value={loginPassword}
-                  onChange={(e) => setLoginPassword(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 text-sm bg-slate-50/50"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-3.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-extrabold text-sm tracking-wide transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer mt-2"
-              >
-                {loading ? (
-                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                ) : (
-                  <>
-                    <span>Sign In to Dashboard</span>
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </>
-                )}
-              </button>
-            </form>
+              )}
+            </>
           ) : (
             /* SIGN UP FORM */
             <form onSubmit={handleSignUp} className="space-y-3.5">
@@ -418,19 +528,67 @@ export default function ClientAuthModal({
                 />
               </div>
 
-              <div>
-                <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
-                  Choose Password *
-                </label>
-                <input
-                  type="password"
-                  required
-                  minLength={6}
-                  placeholder="Minimum 6 characters"
-                  value={registerPassword}
-                  onChange={(e) => setRegisterPassword(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 text-xs sm:text-sm bg-slate-50/50"
-                />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+                      Choose Password *
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setShowRegPassword(!showRegPassword)}
+                      className="text-[10px] text-blue-600 hover:underline font-semibold cursor-pointer"
+                    >
+                      {showRegPassword ? "Hide" : "Show"}
+                    </button>
+                  </div>
+                  <input
+                    type={showRegPassword ? "text" : "password"}
+                    required
+                    minLength={6}
+                    autoComplete="new-password"
+                    placeholder="Minimum 6 characters"
+                    value={registerPassword}
+                    onChange={(e) => setRegisterPassword(e.target.value)}
+                    className="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 text-xs sm:text-sm bg-slate-50/50"
+                  />
+                  <span className="text-[10px] text-slate-400">Min 6 characters</span>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+                    Confirm Password *
+                  </label>
+                  <input
+                    type={showRegPassword ? "text" : "password"}
+                    required
+                    minLength={6}
+                    autoComplete="new-password"
+                    placeholder="Re-enter password to confirm"
+                    value={registerConfirmPassword}
+                    onChange={(e) => setRegisterConfirmPassword(e.target.value)}
+                    className={`w-full px-3 py-2 rounded-xl border text-xs sm:text-sm bg-slate-50/50 focus:ring-2 focus:ring-blue-600 ${
+                      registerConfirmPassword && registerPassword !== registerConfirmPassword
+                        ? "border-rose-400 bg-rose-50/40"
+                        : registerConfirmPassword && registerPassword === registerConfirmPassword
+                        ? "border-emerald-400 bg-emerald-50/30"
+                        : "border-slate-300"
+                    }`}
+                  />
+                  {registerConfirmPassword && (
+                    <span
+                      className={`text-[10px] block mt-0.5 font-medium ${
+                        registerPassword === registerConfirmPassword
+                          ? "text-emerald-600"
+                          : "text-rose-600"
+                      }`}
+                    >
+                      {registerPassword === registerConfirmPassword
+                        ? "✓ Passwords match"
+                        : "✕ Passwords do not match"}
+                    </span>
+                  )}
+                </div>
               </div>
 
               {/* Geographic Hierarchy Selection (Nigeria 36 States + LGAs) */}

@@ -171,7 +171,7 @@ export default function TankPackagesSection({
                 onClick={() => onSelectTank?.(pkg.title)}
                 className="w-full py-2.5 sm:py-3 px-4 rounded-xl bg-slate-900 hover:bg-cyan-600 text-white font-bold text-xs sm:text-sm tracking-wide transition-all shadow-sm hover:shadow-md active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
               >
-                <span>Book This Tank Wash</span>
+                <span>Book This Service Now</span>
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>

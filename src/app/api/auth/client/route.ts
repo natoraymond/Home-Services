@@ -29,6 +29,21 @@ export async function POST(req: Request) {
         );
       }
 
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email.trim())) {
+        return NextResponse.json(
+          { success: false, error: "Please enter a valid email address (e.g. name@example.com)" },
+          { status: 400 }
+        );
+      }
+
+      if (password.length < 6) {
+        return NextResponse.json(
+          { success: false, error: "Password must be at least 6 characters long" },
+          { status: 400 }
+        );
+      }
+
       const auth = authenticateClientUser(email, password);
       if (!auth.success) {
         return NextResponse.json(
@@ -64,7 +79,7 @@ export async function POST(req: Request) {
     }
 
     if (action === "register") {
-      const { fullName, email, phone, password, country, state, lga, address, preferredService } = body;
+      const { fullName, email, phone, password, confirmPassword, country, state, lga, address, preferredService } = body;
 
       if (!fullName || !email || !phone || !password) {
         return NextResponse.json(
@@ -73,9 +88,24 @@ export async function POST(req: Request) {
         );
       }
 
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email.trim())) {
+        return NextResponse.json(
+          { success: false, error: "Please enter a valid email address (e.g. name@example.com)" },
+          { status: 400 }
+        );
+      }
+
       if (password.length < 6) {
         return NextResponse.json(
           { success: false, error: "Password must be at least 6 characters long" },
+          { status: 400 }
+        );
+      }
+
+      if (confirmPassword && password !== confirmPassword) {
+        return NextResponse.json(
+          { success: false, error: "Passwords do not match. Please verify your confirmation password." },
           { status: 400 }
         );
       }

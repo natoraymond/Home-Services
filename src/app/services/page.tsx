@@ -5,11 +5,14 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ServiceModal, { ServiceIcon } from "@/components/ServiceModal";
+import QuoteModal from "@/components/QuoteModal";
 import { servicesData, ServiceItem } from "@/data/services";
 
 export default function ServicesPage() {
   const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>("All");
+  const [isQuoteOpen, setIsQuoteOpen] = useState<boolean>(false);
+  const [quoteService, setQuoteService] = useState<string>("");
 
   const categories = ["All", ...Array.from(new Set(servicesData.map((s) => s.category)))];
 
@@ -139,8 +142,16 @@ export default function ServicesPage() {
         service={selectedService}
         onClose={() => setSelectedService(null)}
         onSelectForBooking={(title) => {
-          window.location.href = `/#book`;
+          setSelectedService(null);
+          setQuoteService(title);
+          setIsQuoteOpen(true);
         }}
+      />
+
+      <QuoteModal
+        isOpen={isQuoteOpen}
+        onClose={() => setIsQuoteOpen(false)}
+        defaultService={quoteService}
       />
 
       <Footer />

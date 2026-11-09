@@ -34,7 +34,7 @@ export default function Footer() {
             <h4 className="text-white font-bold text-sm mb-3">Company</h4>
             <ul className="space-y-2 text-xs">
               <li><Link href="/services" className="hover:text-white transition-colors">All Services Catalog</Link></li>
-              <li><Link href="/#why-us" className="hover:text-white transition-colors">About Raycom</Link></li>
+              <li><Link href="/about" className="hover:text-white transition-colors">About Raycom</Link></li>
               <li><Link href="/#testimonials" className="hover:text-white transition-colors">Customer Reviews</Link></li>
               <li><Link href="/#faq" className="hover:text-white transition-colors">Guarantee Policy</Link></li>
               <li><Link href="/admin" className="text-amber-400 hover:text-amber-300 font-semibold transition-colors">Admin Dashboard →</Link></li>

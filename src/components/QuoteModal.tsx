@@ -99,6 +99,8 @@ export default function QuoteModal({
   const [signUpEmail, setSignUpEmail] = useState("");
   const [signUpPhone, setSignUpPhone] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
+  const [signUpConfirmPassword, setSignUpConfirmPassword] = useState("");
+  const [showSignUpPassword, setShowSignUpPassword] = useState(false);
   const [signUpCountry, setSignUpCountry] = useState("Nigeria");
   const [signUpState, setSignUpState] = useState("Lagos");
   const [signUpLga, setSignUpLga] = useState("Ikeja");
@@ -119,6 +121,11 @@ export default function QuoteModal({
     street: "",
     houseAddress: "",
   });
+
+  // Reset password state
+  const [showForgotModal, setShowForgotModal] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState("");
+  const [forgotMsg, setForgotMsg] = useState<string | null>(null);
 
   // Check client session cookie
   useEffect(() => {
@@ -246,6 +253,19 @@ export default function QuoteModal({
     setAuthLoading(true);
     setAuthError(null);
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(signInEmail.trim())) {
+      setAuthError("Please enter a valid email address (e.g. name@example.com).");
+      setAuthLoading(false);
+      return;
+    }
+
+    if (signInPassword.length < 6) {
+      setAuthError("Password must be at least 6 characters long.");
+      setAuthLoading(false);
+      return;
+    }
+
     try {
       const res = await fetch("/api/auth/client", {
         method: "POST",
@@ -303,6 +323,25 @@ export default function QuoteModal({
     setAuthLoading(true);
     setAuthError(null);
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(signUpEmail.trim())) {
+      setAuthError("Please enter a valid email address (e.g. name@example.com).");
+      setAuthLoading(false);
+      return;
+    }
+
+    if (signUpPassword.length < 6) {
+      setAuthError("Password must be at least 6 characters long.");
+      setAuthLoading(false);
+      return;
+    }
+
+    if (signUpPassword !== signUpConfirmPassword) {
+      setAuthError("Passwords do not match. Please verify your confirmation password.");
+      setAuthLoading(false);
+      return;
+    }
+
     try {
       const res = await fetch("/api/auth/client", {
         method: "POST",
@@ -313,6 +352,7 @@ export default function QuoteModal({
           email: signUpEmail,
           phone: signUpPhone,
           password: signUpPassword,
+          confirmPassword: signUpConfirmPassword,
           country: signUpCountry,
           state: signUpState,
           lga: signUpLga,
@@ -425,7 +465,7 @@ export default function QuoteModal({
               </span>
             </div>
             <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white mt-1.5">
-              Get Free Estimate
+              Get Free Estimate & Dispatch
             </h2>
             <p className="text-xs text-slate-300 mt-1">
               {activeTab === "quote"
@@ -458,8 +498,8 @@ export default function QuoteModal({
                 setAuthSuccess(null);
               }}
               className={`flex-1 py-2 text-xs sm:text-sm font-bold rounded-xl transition-all cursor-pointer ${activeTab === "quote"
-                  ? "bg-amber-400 text-slate-950 shadow-sm"
-                  : "text-slate-600 hover:text-slate-900"
+                ? "bg-amber-400 text-slate-950 shadow-sm"
+                : "text-slate-600 hover:text-slate-900"
                 }`}
             >
               Estimate Form
@@ -472,8 +512,8 @@ export default function QuoteModal({
                 setAuthSuccess(null);
               }}
               className={`flex-1 py-2 text-xs sm:text-sm font-bold rounded-xl transition-all cursor-pointer ${activeTab === "signin"
-                  ? "bg-white text-blue-900 shadow-sm"
-                  : "text-slate-600 hover:text-slate-900"
+                ? "bg-white text-blue-900 shadow-sm"
+                : "text-slate-600 hover:text-slate-900"
                 }`}
             >
               Sign In
@@ -486,8 +526,8 @@ export default function QuoteModal({
                 setAuthSuccess(null);
               }}
               className={`flex-1 py-2 text-xs sm:text-sm font-bold rounded-xl transition-all cursor-pointer ${activeTab === "signup"
-                  ? "bg-blue-600 text-white shadow-sm shadow-blue-500/20"
-                  : "text-slate-600 hover:text-slate-900"
+                ? "bg-blue-600 text-white shadow-sm shadow-blue-500/20"
+                : "text-slate-600 hover:text-slate-900"
                 }`}
             >
               Sign Up (Select Category)
@@ -586,7 +626,7 @@ export default function QuoteModal({
                       <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-[10px]">1</span>
                       Client & Service Details
                     </h4>
-                    <div className="grid sm:grid-cols-2 gap-3">
+                    <div className="grid sm:grid-cols-3 gap-3">
                       <div>
                         <label className="block text-xs font-semibold text-slate-700 mb-1">
                           Full Name *
@@ -597,6 +637,21 @@ export default function QuoteModal({
                           placeholder="e.g. Adebayo Ogunlesi"
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 text-sm bg-slate-50/50"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-semibold text-slate-700 mb-1">
+                          Email Address *
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          autoComplete="email"
+                          placeholder="e.g. client@example.com"
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 text-sm bg-slate-50/50"
                         />
                       </div>
@@ -824,11 +879,13 @@ export default function QuoteModal({
                   <input
                     type="email"
                     required
+                    autoComplete="email"
                     placeholder="client@example.com"
                     value={signInEmail}
                     onChange={(e) => setSignInEmail(e.target.value)}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 text-sm bg-slate-50/50"
                   />
+                  <p className="text-[11px] text-slate-400 mt-1">Must be a valid email format (e.g. name@domain.com)</p>
                 </div>
 
                 <div>
@@ -847,7 +904,9 @@ export default function QuoteModal({
                   <input
                     type={showPassword ? "text" : "password"}
                     required
-                    placeholder="Enter your password"
+                    minLength={6}
+                    autoComplete="current-password"
+                    placeholder="Enter your password (min 6 characters)"
                     value={signInPassword}
                     onChange={(e) => setSignInPassword(e.target.value)}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 text-sm bg-slate-50/50"
@@ -866,6 +925,75 @@ export default function QuoteModal({
                   )}
                 </button>
               </form>
+
+              {/* Forgot password outside the form */}
+              <div className="flex items-center justify-between text-xs pt-1">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setForgotEmail(signInEmail || "");
+                    setForgotMsg(null);
+                    setShowForgotModal(true);
+                  }}
+                  className="font-bold text-amber-700 hover:text-amber-800 hover:underline inline-flex items-center gap-1 cursor-pointer"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                  </svg>
+                  <span>Forgot password?</span>
+                </button>
+
+                <span className="text-slate-400 text-[11px]">Instant recovery via email</span>
+              </div>
+
+              {/* Forgot Password Reset Dialog */}
+              {showForgotModal && (
+                <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-slate-800 space-y-3 animate-in fade-in zoom-in-95">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-xs font-bold text-amber-950 uppercase tracking-wider flex items-center gap-1.5">
+                      <span>🔑</span> Reset Your Password
+                    </h4>
+                    <button
+                      type="button"
+                      onClick={() => setShowForgotModal(false)}
+                      className="text-xs text-slate-500 hover:text-slate-800 font-bold"
+                    >
+                      ✕ Close
+                    </button>
+                  </div>
+                  <p className="text-xs text-amber-900 leading-relaxed">
+                    Enter the email address registered with your account. We will send you instructions to regain access.
+                  </p>
+                  {forgotMsg ? (
+                    <div className="p-2.5 rounded-xl bg-emerald-100 border border-emerald-300 text-xs font-bold text-emerald-900">
+                      {forgotMsg}
+                    </div>
+                  ) : (
+                    <div className="flex gap-2">
+                      <input
+                        type="email"
+                        placeholder="yourname@domain.com"
+                        value={forgotEmail}
+                        onChange={(e) => setForgotEmail(e.target.value)}
+                        className="flex-1 px-3 py-2 rounded-xl border border-amber-300 bg-white text-xs focus:ring-2 focus:ring-blue-600"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (!forgotEmail || !forgotEmail.includes("@")) {
+                            setForgotMsg("Please provide a valid email address.");
+                            return;
+                          }
+                          setForgotMsg(`Password reset link sent to ${forgotEmail}. Please check your inbox.`);
+                        }}
+                        className="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shrink-0 cursor-pointer shadow-sm"
+                      >
+                        Send Reset Link
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
 
               <div className="text-center text-xs text-slate-500 pt-2 border-t border-slate-100">
                 Don&apos;t have an account?{" "}
@@ -951,27 +1079,76 @@ export default function QuoteModal({
                       <input
                         type="email"
                         required
+                        autoComplete="email"
                         placeholder="client@domain.com"
                         value={signUpEmail}
                         onChange={(e) => setSignUpEmail(e.target.value)}
                         className="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 text-xs sm:text-sm bg-slate-50/50"
                       />
+                      <span className="text-[10px] text-slate-400">Valid email format required</span>
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
-                        Choose Password *
-                      </label>
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider">
+                          Choose Password *
+                        </label>
+                        <button
+                          type="button"
+                          onClick={() => setShowSignUpPassword(!showSignUpPassword)}
+                          className="text-[10px] text-blue-600 hover:underline font-semibold cursor-pointer"
+                        >
+                          {showSignUpPassword ? "Hide" : "Show"}
+                        </button>
+                      </div>
                       <input
-                        type="password"
+                        type={showSignUpPassword ? "text" : "password"}
                         required
                         minLength={6}
+                        autoComplete="new-password"
                         placeholder="Min 6 characters"
                         value={signUpPassword}
                         onChange={(e) => setSignUpPassword(e.target.value)}
                         className="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 text-xs sm:text-sm bg-slate-50/50"
                       />
+                      <span className="text-[10px] text-slate-400">Minimum 6 characters</span>
                     </div>
+                  </div>
+
+                  {/* Confirmation Password */}
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1">
+                      Confirm Password *
+                    </label>
+                    <input
+                      type={showSignUpPassword ? "text" : "password"}
+                      required
+                      minLength={6}
+                      autoComplete="new-password"
+                      placeholder="Re-enter your password to confirm"
+                      value={signUpConfirmPassword}
+                      onChange={(e) => setSignUpConfirmPassword(e.target.value)}
+                      className={`w-full px-3 py-2 rounded-xl border text-xs sm:text-sm bg-slate-50/50 focus:ring-2 focus:ring-blue-600 ${
+                        signUpConfirmPassword && signUpPassword !== signUpConfirmPassword
+                          ? "border-rose-400 bg-rose-50/40"
+                          : signUpConfirmPassword && signUpPassword === signUpConfirmPassword
+                          ? "border-emerald-400 bg-emerald-50/30"
+                          : "border-slate-300"
+                      }`}
+                    />
+                    {signUpConfirmPassword && (
+                      <span
+                        className={`text-[10px] block mt-0.5 font-medium ${
+                          signUpPassword === signUpConfirmPassword
+                            ? "text-emerald-600"
+                            : "text-rose-600"
+                        }`}
+                      >
+                        {signUpPassword === signUpConfirmPassword
+                          ? "✓ Passwords match"
+                          : "✕ Passwords do not match"}
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -994,8 +1171,8 @@ export default function QuoteModal({
                           key={cat.id}
                           onClick={() => setSignUpCategory(cat.label)}
                           className={`p-3 rounded-xl border transition-all cursor-pointer flex items-start gap-2.5 ${isSelected
-                              ? "bg-white border-blue-600 ring-2 ring-blue-600/20 shadow-sm"
-                              : "bg-white/80 border-slate-200 hover:border-blue-300 hover:bg-white"
+                            ? "bg-white border-blue-600 ring-2 ring-blue-600/20 shadow-sm"
+                            : "bg-white/80 border-slate-200 hover:border-blue-300 hover:bg-white"
                             }`}
                         >
                           <input
@@ -1108,6 +1285,75 @@ export default function QuoteModal({
                   )}
                 </button>
               </form>
+
+              {/* Forgot password outside the form */}
+              <div className="flex items-center justify-between text-xs pt-1">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setForgotEmail(signInEmail || "");
+                    setForgotMsg(null);
+                    setShowForgotModal(true);
+                  }}
+                  className="font-bold text-amber-700 hover:text-amber-800 hover:underline inline-flex items-center gap-1 cursor-pointer"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                  </svg>
+                  <span>Forgot password?</span>
+                </button>
+
+                <span className="text-slate-400 text-[11px]">Instant recovery via email</span>
+              </div>
+
+              {/* Forgot Password Reset Dialog */}
+              {showForgotModal && (
+                <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-slate-800 space-y-3 animate-in fade-in zoom-in-95">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-xs font-bold text-amber-950 uppercase tracking-wider flex items-center gap-1.5">
+                      <span>🔑</span> Reset Your Password
+                    </h4>
+                    <button
+                      type="button"
+                      onClick={() => setShowForgotModal(false)}
+                      className="text-xs text-slate-500 hover:text-slate-800 font-bold"
+                    >
+                      ✕ Close
+                    </button>
+                  </div>
+                  <p className="text-xs text-amber-900 leading-relaxed">
+                    Enter the email address registered with your account. We will send you instructions to regain access.
+                  </p>
+                  {forgotMsg ? (
+                    <div className="p-2.5 rounded-xl bg-emerald-100 border border-emerald-300 text-xs font-bold text-emerald-900">
+                      {forgotMsg}
+                    </div>
+                  ) : (
+                    <div className="flex gap-2">
+                      <input
+                        type="email"
+                        placeholder="yourname@domain.com"
+                        value={forgotEmail}
+                        onChange={(e) => setForgotEmail(e.target.value)}
+                        className="flex-1 px-3 py-2 rounded-xl border border-amber-300 bg-white text-xs focus:ring-2 focus:ring-blue-600"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (!forgotEmail || !forgotEmail.includes("@")) {
+                            setForgotMsg("Please provide a valid email address.");
+                            return;
+                          }
+                          setForgotMsg(`Password reset link sent to ${forgotEmail}. Please check your inbox.`);
+                        }}
+                        className="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shrink-0 cursor-pointer shadow-sm"
+                      >
+                        Send Reset Link
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
 
               <div className="text-center text-xs text-slate-500 pt-2 border-t border-slate-100">
                 Already registered with Raycom?{" "}

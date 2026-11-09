@@ -146,7 +146,7 @@ export default function CleaningPackagesSection({
                 type="button"
                 onClick={() => {
                   if (onSelectPackage) {
-                    onSelectPackage(`Deep House Cleaning (${pkg.name} - Enugu)`);
+                    onSelectPackage(`Deep house cleaning (${pkg.name} - Enugu)`);
                   } else {
                     const el = document.getElementById("book");
                     if (el) {
@@ -156,7 +156,7 @@ export default function CleaningPackagesSection({
                 }}
                 className="w-full py-3 px-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs text-center transition-colors shadow-sm hover:shadow cursor-pointer flex items-center justify-center gap-1.5"
               >
-                <span>Book This Package in Enugu</span>
+                <span>Book This Service Now</span>
                 <span>→</span>
               </button>
             </div>

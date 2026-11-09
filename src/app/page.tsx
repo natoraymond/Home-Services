@@ -774,16 +774,8 @@ export default function Home() {
             <CleaningPackagesSection
               showTitle={true}
               onSelectPackage={(pkgTitle) => {
-                setFormData((prev) => ({
-                  ...prev,
-                  service: pkgTitle,
-                  state: "Enugu",
-                  lga: "Enugu North",
-                }));
-                const el = document.getElementById("book");
-                if (el) {
-                  el.scrollIntoView({ behavior: "smooth" });
-                }
+                setActiveQuoteService(pkgTitle);
+                setIsQuoteModalOpen(true);
               }}
             />
           </div>

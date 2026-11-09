@@ -28,7 +28,7 @@ export const servicesData: ServiceItem[] = [
     fullDesc:
       "Transform your living space with Raycom's thorough Deep House Cleaning service. From kitchens and grease-laden cooktops to tile grout, bathrooms, living rooms, and bedrooms, our trained, background-checked cleaners use eco-friendly, hospital-grade cleaning agents and high-powered HEPA vacuums to leave your home sparkling clean and allergen-free.",
     iconName: "broom",
-    pricingStarting: "$89",
+    pricingStarting: "₦35,000",
     durationEstimate: "2 - 4 Hours",
     features: [
       "All Rooms Dusting & Polishing",
@@ -160,7 +160,7 @@ export const servicesData: ServiceItem[] = [
     fullDesc:
       "Our licensed master plumbers handle everything from stubborn sink blockages and leaky pipes to complete water line replacements, boiler tuning, and commercial drainage. We use fiber-optic drain cameras and hydrostatic testing to fix problems accurately without damaging your walls or floors.",
     iconName: "wrench",
-    pricingStarting: "$75",
+    pricingStarting: "₦15,000",
     durationEstimate: "1 - 3 Hours",
     features: [
       "24/7 Emergency Leak Detection",
@@ -214,7 +214,7 @@ export const servicesData: ServiceItem[] = [
     fullDesc:
       "Electrical work requires precision, safety compliance, and deep technical know-how. Raycom's certified electricians troubleshoot electrical trips, upgrade breaker boxes, install energy-efficient LED configurations, and ensure your home is protected with modern surge suppressors and fire-safe breakers.",
     iconName: "bolt",
-    pricingStarting: "$85",
+    pricingStarting: "₦20,000",
     durationEstimate: "1 - 4 Hours",
     features: [
       "Breaker Panel Modernization",
@@ -268,7 +268,7 @@ export const servicesData: ServiceItem[] = [
     fullDesc:
       "Keep your home comfortable year-round with our full-service heating, ventilation, and air conditioning solutions. From emergency refrigerant leak recharge and compressor diagnostics to seasonal maintenance and duct sanitization, our HVAC technicians optimize your airflow and lower energy bills.",
     iconName: "sparkles",
-    pricingStarting: "$99",
+    pricingStarting: "₦25,000",
     durationEstimate: "2 - 5 Hours",
     features: [
       "AC Compressor & Coolant Tuning",
@@ -322,7 +322,7 @@ export const servicesData: ServiceItem[] = [
     fullDesc:
       "Transform your home’s aesthetic and market value with Raycom's skilled carpenters and craftsmen. We take on single-room makeovers, bathroom tile retiling, accent wall painting, drywall patchworks, door fittings, and general punch-list repairs with surgical precision.",
     iconName: "paint",
-    pricingStarting: "$95",
+    pricingStarting: "₦30,000",
     durationEstimate: "Custom Project Basis",
     features: [
       "Kitchen & Bathroom Refurbishments",
